@@ -1,0 +1,48 @@
+---
+
+- name: Create the directory for ldap database
+  file: path=/var/lib/ldap/{{ domain_name }}/ state=directory owner={{ ldap_user }} group={{ ldap_user }}
+
+- name: Create the directory for ldap certificates
+  file: path={{ app_path }}/certs/ state=directory owner={{ ldap_user }} group={{ ldap_user }}
+
+- name: Generate the private key for certificate request
+  shell: openssl genrsa -des3 -passout pass:password -out my1.key 1024 chdir={{ app_path}}/certs/ 
+         creates={{ app_path}}/certs/my1.key
+
+- name: Strip the passphrase from the key 
+  shell: openssl rsa -in my1.key -passin pass:password -out my.key chdir={{ app_path }}/certs/ 
+         creates={{ app_path }}/certs/my.key
+
+- name: Create and sign the the new certificate 
+  shell: openssl req -new -x509 -subj '/C={{ country }}/ST={{ state }}/L={{ location }}/O={{ organization }}/CN={{ ansible_hostname }}/' -days 3650 -key my.key -out cert.crt -extensions v3_ca chdir={{ app_path }}/certs/
+         creates={{ app_path }}/certs/cert.crt
+
+- name: copy the supporting files
+  copy: src=ldap dest=/etc/sysconfig/ldap mode=0755
+  when: enable_ssl and ansible_os_family == 'RedHat'
+  notify: 
+   - restart slapd
+
+
+- name: copy the supporting files
+  copy: src=slapd_fedora dest=/etc/sysconfig/slapd mode=0755
+  when: enable_ssl and ansible_distribution == "Fedora"
+  notify: 
+   - restart slapd
+
+- name: copy the supporting files
+  copy: src=slapd dest=/etc/default/slapd mode=0755
+  when: enable_ssl and ansible_os_family == 'Debian'
+  notify: 
+   - restart slapd
+
+- name: start the slapd service
+  service: name=slapd state=started enabled=yes 
+
+- name: Copy the template for creating base dn
+  template: src=domain.ldif dest=/tmp
+
+- name: add the base domain
+  shell: ldapadd -x -D "cn=Manager,dc={{ domain_name.split('.')[0] }},dc={{ domain_name.split('.')[1] }}" -w {{ rootpw }} -f /tmp/domain.ldif && touch {{ app_path }}/rootdn_created creates={{ app_path }}/rootdn_created
+   

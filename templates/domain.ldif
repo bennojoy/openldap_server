@@ -1,0 +1,4 @@
+dn: dc={{ domain_name.split('.')[0] }},dc={{ domain_name.split('.')[1] }}
+objectClass: domain
+dc: {{ domain_name.split('.')[0] }}
+
