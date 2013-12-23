@@ -1,9 +1,9 @@
-ldap_pkgs:
+openldap_server_pkgs:
   - openldap-servers
   - openldap-clients
   - libselinux-python
   - openssl
 
-app_path: "/etc/openldap/"
-ldap_user: ldap
+openldap_server_app_path: "/etc/openldap/"
+openldap_server_user: ldap
 

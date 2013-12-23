@@ -8,23 +8,23 @@ modulepath      /usr/lib64/openldap
 
 access to *
                 by self write
-                by dn.base="cn=Manager,dc={{ domain_name.split('.')[0] }},dc={{ domain_name.split('.')[1] }}" write
+                by dn.base="cn=Manager,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}" write
                 by * read
 access to attrs=userPassword
                 by self write
                 by anonymous auth
-                by dn.base="cn=Manager,dc={{ domain_name.split('.')[0] }},dc={{ domain_name.split('.')[1] }}" write
+                by dn.base="cn=Manager,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}" write
                 by * none
 access to attrs=shadowLastChange
                 by self write
                 by * read
 
 database        bdb
-suffix          "dc={{ domain_name.split('.')[0] }},dc={{ domain_name.split('.')[1] }}"
-rootdn          "cn=Manager,dc={{ domain_name.split('.')[0] }},dc={{ domain_name.split('.')[1] }}"
+suffix          "dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}"
+rootdn          "cn=Manager,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}"
 rootpw          {{ root_password.stdout }}
 #This directory has to be created and would contain the ldap database.
-directory       /var/lib/ldap/{{ domain_name }}/
+directory       /var/lib/ldap/{{ openldap_server_domain_name }}/
 index objectClass                       eq,pres
 index ou,cn,mail,surname,givenname      eq,pres,sub
 index uidNumber,gidNumber,loginShell    eq,pres

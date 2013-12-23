@@ -1,15 +1,15 @@
 ---
 
 #The domain prefix for ldap
-domain_name: example.com
+openldap_server_domain_name: example.com
 
 #This is the password for admin for openldap 
-rootpw: passme
+openldap_server_rootpw: passme
 
 #The self signed ssl parameters
-country: US
-state: oregon
-location: portland
-organization: IT
+openldap_server_country: US
+openldap_server_state: oregon
+openldap_server_location: portland
+openldap_server_organization: IT
 
-enable_ssl: true
+openldap_server_enable_ssl: true
