@@ -20,5 +20,5 @@ galaxy_info:
       - raring
       - saucy
   categories:
-   - development
+   - system
 dependencies: []
