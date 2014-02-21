@@ -36,7 +36,8 @@ Examples
         openldap_server_domain_name: example.com
         openldap_server_rootpw: passme
         openldap_server_enable_ssl: false
-       
+        openldap_server_dn: dc=example,dc=com
+
 2) Configure an OpenLDAP server with SSL:
 
     - hosts: all
@@ -49,6 +50,7 @@ Examples
         openldap_server_state: Oregon
         openldap_server_location: Portland
         openldap_server_organization: IT
+        openldap_server_dn: dc=example,dc=com
 
 Dependencies
 ------------
