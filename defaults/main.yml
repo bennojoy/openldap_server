@@ -15,4 +15,4 @@ openldap_server_organization: IT
 openldap_server_enable_ssl: true
 
 #ldif file
-ldif_file = src=domain.ldif dest=/tmp
+ldif_file: src=domain.ldif dest=/tmp
