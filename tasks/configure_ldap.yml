@@ -38,9 +38,9 @@
 
 - name: start the slapd service
   service: name=slapd state=started enabled=yes 
-
+  
 - name: Copy the template for creating base dn
-  template: src=domain.ldif dest=/tmp
+  template: {{ ldif_file }}
 
 - name: add the base domain
   shell: ldapadd -x -D "cn=Manager,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}" -w {{ openldap_server_rootpw }} -f /tmp/domain.ldif && touch {{ openldap_server_app_path }}/rootdn_created creates={{ openldap_server_app_path }}/rootdn_created
