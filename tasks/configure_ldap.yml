@@ -43,5 +43,5 @@
   template: src={{ openldap_server_ldif }} dest=/tmp
 
 - name: add the base domain
-  shell: ldapadd -x -D "cn=Manager,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}" -w {{ openldap_server_rootpw }} -f {{ openldap_server_ldif }} && touch {{ openldap_server_app_path }}/rootdn_created creates={{ openldap_server_app_path }}/rootdn_created
+  shell: ldapadd -x -D "cn=Manager,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}" -w {{ openldap_server_rootpw }} -f /tmp/{{ openldap_server_ldif }} && touch {{ openldap_server_app_path }}/rootdn_created creates={{ openldap_server_app_path }}/rootdn_created
    
