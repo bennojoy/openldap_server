@@ -1,4 +1,4 @@
 ---
-
+domain_component: "dc={{ openldap_server_domain_name.split('.') | join(',dc=') }}"
 env:
  RUNLEVEL: 1
