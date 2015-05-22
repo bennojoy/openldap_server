@@ -6,7 +6,7 @@
 #   (use SASL with EXTERNAL mechanism for authentication)
 # - default: ldapi:/// ldap:///
 # - example: ldapi:/// ldap://127.0.0.1/ ldap://10.0.0.1:1389/ ldaps:///
-SLAPD_URLS="ldapi:/// ldaps:///"
+SLAPD_URLS="ldapi:/// ldap:///"
 
 # Any custom options
 #SLAPD_OPTIONS=""
