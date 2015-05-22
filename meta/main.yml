@@ -19,6 +19,9 @@ galaxy_info:
       - quantal
       - raring
       - saucy
+   - name: Debian
+      - squeeze
+      - wheezy
   categories:
    - system
 dependencies: []
