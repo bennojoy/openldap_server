@@ -15,7 +15,15 @@
          creates={{ openldap_server_app_path }}/certs/my.key
 
 - name: Create and sign the the new certificate 
-  shell: openssl req -new -x509 -subj '/C={{ openldap_server_country }}/ST={{ openldap_server_state }}/L={{ openldap_server_location }}/O={{ openldap_server_organization }}/CN={{ ansible_hostname }}/' -days 3650 -key my.key -out cert.crt -extensions v3_ca chdir={{ openldap_server_app_path }}/certs/   creates={{ openldap_server_app_path }}/certs/cert.crt
+  shell: openssl req \
+         -new \
+         -x509 \
+         -subj '/C={{ openldap_server_country }}/ST={{ openldap_server_state }}/L={{ openldap_server_location }}/O={{ openldap_server_organization }}/CN={{ openldap_server_hostname }}/' \
+         -days {{ openldap_server_certificate_expiry_days }} \
+         -key my.key \
+         -out cert.crt \
+         -extensions v3_ca chdir={{ openldap_server_app_path }}/certs/
+         creates={{ openldap_server_app_path }}/certs/cert.crt
 
 - name: copy the supporting files
   copy: src=ldap dest=/etc/sysconfig/ldap mode=0755
