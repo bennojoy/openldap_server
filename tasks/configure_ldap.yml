@@ -9,10 +9,18 @@
 - name: Generate the private key for certificate request
   shell: openssl genrsa -des3 -passout pass:password -out my1.key {{ openldap_server_ssl_keylength }} chdir={{ openldap_server_app_path }}/certs/
          creates={{ openldap_server_app_path }}/certs/my1.key
+  when: openldap_server_ssl_private_key is undefined
 
 - name: Strip the passphrase from the key 
   shell: openssl rsa -in my1.key -passin pass:password -out my.key chdir={{ openldap_server_app_path }}/certs/ 
          creates={{ openldap_server_app_path }}/certs/my.key
+  when: openldap_server_ssl_private_key is undefined
+
+- name: Create the ssl private key
+  copy: content='{{ openldap_server_ssl_private_key }}'
+        dest={{ openldap_server_app_path }}/certs/my.key
+        owner={{ openldap_server_user }}
+  when: openldap_server_ssl_private_key is defined
 
 - name: Create and sign the the new certificate 
   shell: openssl req \
