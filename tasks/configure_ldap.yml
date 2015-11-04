@@ -40,6 +40,11 @@
         owner={{ openldap_server_user }}
   when: openldap_server_ssl_certificate is defined
 
+- name: Download certificate chain file
+  get_url: url=https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+           dest={{ openldap_server_app_path }}/certs/cacert.pem
+           mode=0444
+  when: openldap_server_ssl_cacertificate is defined
 
 - name: copy the supporting files
   copy: src=ldap dest=/etc/sysconfig/ldap mode=0755
