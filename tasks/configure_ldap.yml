@@ -32,6 +32,14 @@
          -out cert.crt \
          -extensions v3_ca chdir={{ openldap_server_app_path }}/certs/
          creates={{ openldap_server_app_path }}/certs/cert.crt
+  when: openldap_server_ssl_certificate is undefined
+
+- name: Create the ssl certificate
+  copy: content='{{ openldap_server_ssl_certificate }}'
+        dest={{ openldap_server_app_path }}/certs/cert.crt
+        owner={{ openldap_server_user }}
+  when: openldap_server_ssl_certificate is defined
+
 
 - name: copy the supporting files
   copy: src=ldap dest=/etc/sysconfig/ldap mode=0755
