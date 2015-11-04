@@ -5,7 +5,7 @@
 #
 # Run slapd with -h "... ldap:/// ..."
 #   yes/no, default: yes
-SLAPD_LDAP=no
+SLAPD_LDAP=yes
 
 # Run slapd with -h "... ldapi:/// ..."
 #   yes/no, default: yes
