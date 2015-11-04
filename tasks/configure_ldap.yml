@@ -11,8 +11,8 @@
          creates={{ openldap_server_app_path }}/certs/my1.key
   when: openldap_server_ssl_private_key is undefined
 
-- name: Strip the passphrase from the key 
-  shell: openssl rsa -in my1.key -passin pass:password -out my.key chdir={{ openldap_server_app_path }}/certs/ 
+- name: Strip the passphrase from the key
+  shell: openssl rsa -in my1.key -passin pass:password -out my.key chdir={{ openldap_server_app_path }}/certs/
          creates={{ openldap_server_app_path }}/certs/my.key
   when: openldap_server_ssl_private_key is undefined
 
@@ -49,25 +49,25 @@
 - name: copy the supporting files
   copy: src=ldap dest=/etc/sysconfig/ldap mode=0755
   when: openldap_server_enable_ssl and ansible_os_family == 'RedHat'
-  notify: 
+  notify:
    - restart slapd
 
 
 - name: copy the supporting files
   copy: src=slapd_fedora dest=/etc/sysconfig/slapd mode=0755
   when: openldap_server_enable_ssl and ansible_distribution == "Fedora"
-  notify: 
+  notify:
    - restart slapd
 
 - name: copy the supporting files
   copy: src=slapd dest=/etc/default/slapd mode=0755
   when: openldap_server_enable_ssl and ansible_os_family == 'Debian'
-  notify: 
+  notify:
    - restart slapd
 
 - name: start the slapd service
-  service: name=slapd state=started enabled=yes 
-  
+  service: name=slapd state=started enabled=yes
+
 - name: Copy the template for creating base dn
   template: src={{ openldap_server_ldif }} dest=/tmp/
   register: result
