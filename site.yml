@@ -2,7 +2,7 @@
 - hosts: all
   sudo: yes
   vars:
-      openldap_server_ssl_cacertificate: true
+      openldap_server_ca_cert_url: https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
       openldap_server_tlscacertificatefile: /etc/ldap/certs/cacert.pem
   roles:
     - .

@@ -21,7 +21,7 @@ them are as follows:
     openldap_server_rootpw: passme              # This is the password for admin for openldap
     openldap_server_enable_ssl: true            # To enable/disable ssl for the ldap
     openldap_server_country: US                 # The self signed ssl certificate parameters
-    openldap_server_ssl_cacertificate:          # Downlaod CA certificate bundle
+    openldap_server_ca_cert_url:                # Download URL CA certificate bundle
     openldap_server_state: Oregon
     openldap_server_location: Portland
     openldap_server_organization: IT
@@ -72,5 +72,3 @@ Author Information
 ------------------
 
 Benno Joy
-
-
