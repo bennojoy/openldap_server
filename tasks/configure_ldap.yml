@@ -22,7 +22,7 @@
         owner={{ openldap_server_user }}
   when: openldap_server_ssl_private_key is defined
 
-- name: Create and sign the the new certificate 
+- name: Create and sign the the new certificate
   shell: openssl req \
          -new \
          -x509 \

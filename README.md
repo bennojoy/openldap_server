@@ -72,5 +72,3 @@ Author Information
 ------------------
 
 Benno Joy
-
-
