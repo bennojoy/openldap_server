@@ -1,0 +1,8 @@
+---
+- hosts: all
+  sudo: yes
+  vars:
+      openldap_server_ssl_cacertificate: true
+      openldap_server_tlscacertificatefile: /etc/ldap/certs/cacert.pem
+  roles:
+    - .
