@@ -11,6 +11,9 @@ openldap_server_country: US
 openldap_server_state: oregon
 openldap_server_location: portland
 openldap_server_organization: IT
+openldap_server_certificate_expiry_days: 3650
+openldap_server_hostname: "{{ ansible_hostname }}"
+openldap_server_ssl_keylength: 1024
 
 openldap_server_enable_ssl: true
 

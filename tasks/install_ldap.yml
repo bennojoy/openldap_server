@@ -19,19 +19,19 @@
   file: path={{ openldap_server_app_path }}/slapd.d state=absent
 
 - name: Generate the root password for ldap
-  shell: slappasswd -s {{ openldap_server_rootpw }} 
+  shell: slappasswd -s {{ openldap_server_rootpw }}
   register: root_password
 
 - name: Copy the slapd.conf configuration file for Redhat
   template: src=slapd.conf.j2 dest={{ openldap_server_app_path }}/slapd.conf
   when: ansible_os_family == "RedHat"
-  notify: 
+  notify:
    - restart slapd
 
 - name: Copy the slapd.conf configuration file
   template: src=slapd.conf_ubuntu.j2 dest={{ openldap_server_app_path }}/slapd.conf
   when: ansible_os_family == "Debian"
-  notify: 
+  notify:
    - restart slapd
 
 - name: Copy the ldap.conf configuration file

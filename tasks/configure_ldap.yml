@@ -7,41 +7,73 @@
   file: path={{ openldap_server_app_path }}/certs/ state=directory owner={{ openldap_server_user }} group={{ openldap_server_user }}
 
 - name: Generate the private key for certificate request
-  shell: openssl genrsa -des3 -passout pass:password -out my1.key 1024 chdir={{ openldap_server_app_path }}/certs/ 
+  shell: openssl genrsa -des3 -passout pass:password -out my1.key {{ openldap_server_ssl_keylength }} chdir={{ openldap_server_app_path }}/certs/
          creates={{ openldap_server_app_path }}/certs/my1.key
+  when: openldap_server_ssl_private_key is undefined
 
-- name: Strip the passphrase from the key 
-  shell: openssl rsa -in my1.key -passin pass:password -out my.key chdir={{ openldap_server_app_path }}/certs/ 
+- name: Strip the passphrase from the key
+  shell: openssl rsa -in my1.key -passin pass:password -out my.key chdir={{ openldap_server_app_path }}/certs/
          creates={{ openldap_server_app_path }}/certs/my.key
+  when: openldap_server_ssl_private_key is undefined
 
-- name: Create and sign the the new certificate 
-  shell: openssl req -new -x509 -subj '/C={{ openldap_server_country }}/ST={{ openldap_server_state }}/L={{ openldap_server_location }}/O={{ openldap_server_organization }}/CN={{ ansible_hostname }}/' -days 3650 -key my.key -out cert.crt -extensions v3_ca chdir={{ openldap_server_app_path }}/certs/   creates={{ openldap_server_app_path }}/certs/cert.crt
+- name: Create the ssl private key
+  copy: content='{{ openldap_server_ssl_private_key }}'
+        dest={{ openldap_server_app_path }}/certs/my.key
+        owner={{ openldap_server_user }}
+  when: openldap_server_ssl_private_key is defined
+
+- name: Create and sign the the new certificate
+  shell: openssl req \
+         -new \
+         -x509 \
+         -subj '/C={{ openldap_server_country }}/ST={{ openldap_server_state }}/L={{ openldap_server_location }}/O={{ openldap_server_organization }}/CN={{ openldap_server_hostname }}/' \
+         -days {{ openldap_server_certificate_expiry_days }} \
+         -key my.key \
+         -out cert.crt \
+         -extensions v3_ca chdir={{ openldap_server_app_path }}/certs/
+         creates={{ openldap_server_app_path }}/certs/cert.crt
+  when: openldap_server_ssl_certificate is undefined
+
+- name: Create the ssl certificate
+  copy: content='{{ openldap_server_ssl_certificate }}'
+        dest={{ openldap_server_app_path }}/certs/cert.crt
+        owner={{ openldap_server_user }}
+  when: openldap_server_ssl_certificate is defined
+
+- name: Download certificate chain file
+  get_url: url={{ openldap_server_ca_cert_url }}
+           dest={{ openldap_server_app_path }}/certs/cacert.pem
+           mode=0444
+  when: openldap_server_ca_cert_url is defined
 
 - name: copy the supporting files
   copy: src=ldap dest=/etc/sysconfig/ldap mode=0755
   when: openldap_server_enable_ssl and ansible_os_family == 'RedHat'
-  notify: 
+  notify:
    - restart slapd
 
 
 - name: copy the supporting files
   copy: src=slapd_fedora dest=/etc/sysconfig/slapd mode=0755
   when: openldap_server_enable_ssl and ansible_distribution == "Fedora"
-  notify: 
+  notify:
    - restart slapd
 
 - name: copy the supporting files
   copy: src=slapd dest=/etc/default/slapd mode=0755
   when: openldap_server_enable_ssl and ansible_os_family == 'Debian'
-  notify: 
+  notify:
    - restart slapd
 
 - name: start the slapd service
-  service: name=slapd state=started enabled=yes 
-  
+  service: name=slapd state=started enabled=yes
+
 - name: Copy the template for creating base dn
   template: src={{ openldap_server_ldif }} dest=/tmp/
   register: result
 
 - name: add the base domain
-  shell: ldapadd -x -D "cn=Manager,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}" -w {{ openldap_server_rootpw }} -f {{ result.dest|default(result.path) }} && touch {{ openldap_server_app_path }}/rootdn_created creates={{ openldap_server_app_path }}/rootdn_created 
+  shell: ldapadd -x -D "cn=Manager,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}" \
+         -w {{ openldap_server_rootpw }} \
+         -f {{ result.dest|default(result.path) }} && touch {{ openldap_server_app_path }}/rootdn_created
+         creates={{ openldap_server_app_path }}/rootdn_created
