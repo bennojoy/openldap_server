@@ -4,3 +4,4 @@
 
 - name: Add some example entries
   shell: ldapadd -x -c -D "cn=Manager,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}" -w {{ openldap_server_rootpw }} -f '/tmp/persons.ldif'
+  no_log: true
