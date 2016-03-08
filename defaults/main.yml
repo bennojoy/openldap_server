@@ -12,7 +12,9 @@ openldap_server_state: oregon
 openldap_server_location: portland
 openldap_server_organization: IT
 
+openldap_server_enable_plain: true
 openldap_server_enable_ssl: true
+openldap_server_enable_ipc: true
 
 #The ldif file
 openldap_server_ldif: domain.ldif

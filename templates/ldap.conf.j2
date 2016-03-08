@@ -6,11 +6,12 @@
 # This file should be world readable but not world writable.
 
 BASE    dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}
-{% if openldap_server_enable_ssl %}
+{% if openldap_server_enable_ipc %}
+URI     ldapi:///
+{% elif openldap_server_enable_ssl %} 
 URI     ldaps://localhost
 TLS_REQCERT never
-{% endif %}
-{% if not openldap_server_enable_ssl %}
+{% else %}
 URI     ldap://localhost
 {% endif %}
 
