@@ -16,12 +16,12 @@ sn: {{ user }}
 userPassword: {{ config['password'] }}
 loginShell: {{ config.get('shell', '/bin/bash') }}
 homeDirectory: {{ config.get('shell', '/home/{}'.format(user)) }}
-{%- if 'email' in config -%}
+{% if 'email' in config %}
 mail: {{ config['mail'] }}
-{%- endif -%}
-{%- if 'phone' in config -%}
+{% endif %}
+{% if 'phone' in config %}
 telephoneNumber: {{ config['phone'] }}
-{%- endif %}
+{% endif %}
 uidNumber: {{ 10000 + loop.index }}
 gidNumber: {{ 10000 + guid_loop.index }}
 objectClass: inetOrgPerson
