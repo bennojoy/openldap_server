@@ -1,4 +1,4 @@
-{%- for group, users in open_ldap_users.items() -%}
+{%- for group, users in openldap_server_users.items() -%}
 
 dn: cn={{ group }},ou=Group,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}
 objectClass: posixGroup
