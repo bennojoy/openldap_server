@@ -21,7 +21,7 @@ mail: {{ config['mail'] }}
 {%- endif -%}
 {%- if 'phone' in config -%}
 telephoneNumber: {{ config['phone'] }}
-{%- endif -%}
+{%- endif %}
 uidNumber: {{ 10000 + loop.index }}
 gidNumber: {{ 10000 + guid_loop.index }}
 objectClass: inetOrgPerson
