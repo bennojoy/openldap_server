@@ -11,7 +11,8 @@ memberUid: {{ user }}
 dn: uid={{ user }},ou=Group,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}
 cn: {{ user }}
 userPassword: {{ config['password'] }}
-loginShell: 
+loginShell: {{ config.get('shell', '/bin/bash') }}
+homeDirectory: {{ config.get('shell', '/home/{}'.format(user)) }}
 objectClass: inetOrgPerson
 objectClass: posixAccount
 objectClass: shadowAccount
