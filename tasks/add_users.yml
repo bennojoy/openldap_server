@@ -4,7 +4,7 @@
   template: src=users.ldif.j2 dest={{ openldap_server_app_path }}/users.ldif
   register: users_copy
 
-- name: add the base domain
+- name: Add Users
   when: users_copy.changed
   register: command_result
   failed_when: "command_result.rc not in [1,68]"
