@@ -1,4 +1,16 @@
-dn: dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}
+{% set ldap_domain = 'dc={{ openldap_server_domain_name.split('.')[0] }}dc={{ openldap_server_domain_name.split('.')[1] }}' %}
+dn: dc={{ ldap_domain }}
 objectClass: domain
 dc: {{ openldap_server_domain_name.split('.')[0] }}
 
+dn: ou=People,{{ ldap_domain }}
+ou: People
+description: All people in iDevelopment.info
+objectClass: top
+objectClass: organizationalUnit
+
+dn: ou=Group,{{ ldap_domain }}
+ou: Group
+description: All groups in iDevelopment.info
+objectClass: top
+objectClass: organizationalUnit
