@@ -40,8 +40,9 @@
   service: name=slapd state=started enabled=yes 
   
 - name: Copy the template for creating base dn
-  template: src={{ openldap_server_ldif }} dest=/tmp/
-  register: result
+  template: src=domain.ldif.j2 dest={{ openldap_server_app_path }}/domain.ldif
+  register: domain_copy
 
 - name: add the base domain
-  shell: ldapadd -x -D "cn=Manager,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}" -w {{ openldap_server_rootpw }} -f {{ result.dest|default(result.path) }} && touch {{ openldap_server_app_path }}/rootdn_created creates={{ openldap_server_app_path }}/rootdn_created 
+  when: domain_copy.changed
+  shell: ldapadd -x -D "cn=Manager,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}" -w {{ openldap_server_rootpw }} -f {{ openldap_server_app_path }}/domain.ldif 

@@ -1,6 +1,7 @@
+{% set ldap_domain = 'dc={},dc={}'.format(openldap_server_domain_name.split('.')[0],openldap_server_domain_name.split('.')[1]) %}
 {%- for group, users in openldap_server_users.items() -%}
 {% set guid_loop = loop %}
-dn: cn={{ group }},ou=Group,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}
+dn: cn={{ group }},ou=Group,{{ ldap_domain }}
 objectClass: posixGroup
 cn: {{ group }}
 gidNumber: {{ 10000 + guid_loop.index }}
@@ -9,7 +10,7 @@ memberUid: {{ user }}
 {% endfor %}
 
 {% for user, config in users.items() %}
-dn: uid={{ user }},ou=Users,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}
+dn: uid={{ user }},ou=Users,dc={{ ldap_domain }}
 cn: {{ user }}
 userPassword: {{ config['password'] }}
 loginShell: {{ config.get('shell', '/bin/bash') }}
