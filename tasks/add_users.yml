@@ -1,4 +1,4 @@
 ---
 
 - name: Create users ldif file
-  template: src=users.ldif.j2 dst={{ openldap_server_app_path }}/users.ldif
+  template: src=users.ldif.j2 dest={{ openldap_server_app_path }}/users.ldif
