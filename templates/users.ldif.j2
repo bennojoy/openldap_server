@@ -1,4 +1,4 @@
-{%- for g_idx (group, users) in enumerate(openldap_server_users.items()) -%}
+{%- for g_idx, (group, users) in enumerate(openldap_server_users.items()) -%}
 
 dn: cn={{ group }},ou=Group,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}
 objectClass: posixGroup
@@ -8,7 +8,7 @@ gidNumber: {{ 10000 + g_ixd }}
 memberUid: {{ user }}
 {% endfor %}
 
-{% for u_idx (user, config) in enumerate(users.items()) %}
+{% for u_idx, (user, config) in enumerate(users.items()) %}
 dn: uid={{ user }},ou=Users,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}
 cn: {{ user }}
 userPassword: {{ config['password'] }}
