@@ -3,8 +3,8 @@ dn: {{ ldap_domain }}
 objectClass: domain
 dc: {{ openldap_server_domain_name.split('.')[0] }}
 
-dn: ou=People,{{ ldap_domain }}
-ou: People
+dn: ou=Users,{{ ldap_domain }}
+ou: Users
 objectClass: top
 objectClass: organizationalUnit
 
