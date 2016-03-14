@@ -1,21 +1,21 @@
-{%- for g_idx, (group, users) in enumerate(openldap_server_users.items()) -%}
-
+{%- for group, users in openldap_server_users.items() -%}
+{% set guid_loop = loop %}
 dn: cn={{ group }},ou=Group,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}
 objectClass: posixGroup
 cn: {{ group }}
-gidNumber: {{ 10000 + g_ixd }}
+gidNumber: {{ 10000 + guid_loop.index }}
 {% for user in users.keys() %}
 memberUid: {{ user }}
 {% endfor %}
 
-{% for u_idx, (user, config) in enumerate(users.items()) %}
+{% for user, config in users.items() %}
 dn: uid={{ user }},ou=Users,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}
 cn: {{ user }}
 userPassword: {{ config['password'] }}
 loginShell: {{ config.get('shell', '/bin/bash') }}
 homeDirectory: {{ config.get('shell', '/home/{}'.format(user)) }}
-uidNumber: {{ 10000 + u_ixd }}
-gidNumber: {{ 10000 + g_ixd }}
+uidNumber: {{ 10000 + loop.index }}
+gidNumber: {{ 10000 + guid_loop.index }}
 objectClass: inetOrgPerson
 objectClass: posixAccount
 objectClass: shadowAccount
