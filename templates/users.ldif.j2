@@ -16,5 +16,7 @@ homeDirectory: {{ config.get('shell', '/home/{}'.format(user)) }}
 objectClass: inetOrgPerson
 objectClass: posixAccount
 objectClass: shadowAccount
+
 {% endfor %}
+
 {% endfor %}
