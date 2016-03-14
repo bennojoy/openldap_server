@@ -5,12 +5,10 @@ dc: {{ openldap_server_domain_name.split('.')[0] }}
 
 dn: ou=People,{{ ldap_domain }}
 ou: People
-description: All people in iDevelopment.info
 objectClass: top
 objectClass: organizationalUnit
 
 dn: ou=Group,{{ ldap_domain }}
 ou: Group
-description: All groups in iDevelopment.info
 objectClass: top
 objectClass: organizationalUnit
