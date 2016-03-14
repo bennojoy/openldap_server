@@ -45,4 +45,7 @@
 
 - name: add the base domain
   when: domain_copy.changed
+  register: command_result
+  failed_when: "command_result.rc not in [1,68]"
   shell: ldapadd -c -x -D "cn=Manager,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}" -w {{ openldap_server_rootpw }} -f {{ openldap_server_app_path }}/domain.ldif 
+
