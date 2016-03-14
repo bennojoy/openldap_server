@@ -1,6 +1,6 @@
 {%- for group, users in open_ldap_users.items() -%}
 
-dn: cn={{ group }},ou=Group,dc={{{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}
+dn: cn={{ group }},ou=Group,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}
 objectClass: posixGroup
 cn: {{ group }}
   {%- for user in users.keys() -%}
@@ -8,7 +8,7 @@ memberUid: {{ user }}
   {%- endfor -%}
 
   {%- for user, config in users.items() -%}
-dn: uid={{ user }},ou=Group,dc={{{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}
+dn: uid={{ user }},ou=Group,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}
 cn: {{ user }}
 userPassword: {{ password }}
 loginShell: 
