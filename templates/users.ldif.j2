@@ -10,7 +10,7 @@ memberUid: {{ user }}
 {% endfor %}
 
 {% for user, config in users.items() %}
-dn: uid={{ user }},ou=Users,dc={{ ldap_domain }}
+dn: uid={{ user }},ou=Users,{{ ldap_domain }}
 cn: {{ user }}
 userPassword: {{ config['password'] }}
 loginShell: {{ config.get('shell', '/bin/bash') }}
