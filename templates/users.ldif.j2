@@ -17,7 +17,7 @@ userPassword: {{ config['password'] }}
 loginShell: {{ config.get('shell', '/bin/bash') }}
 homeDirectory: {{ config.get('shell', '/home/{}'.format(user)) }}
 {% if 'email' in config %}
-mail: {{ config['mail'] }}
+mail: {{ config['email'] }}
 {% endif %}
 {% if 'phone' in config %}
 telephoneNumber: {{ config['phone'] }}
