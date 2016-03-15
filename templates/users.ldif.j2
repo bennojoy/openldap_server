@@ -14,11 +14,9 @@ dn: uid={{ user }},ou=Users,{{ ldap_domain }}
 cn: {{ user }}
 sn: {{ user }}
 userPassword: {{ config['password'] }}
+mail: {{ config['email'] }}
 loginShell: {{ config.get('shell', '/bin/bash') }}
 homeDirectory: {{ config.get('shell', '/home/{}'.format(user)) }}
-{% if 'email' in config %}
-mail: {{ config['email'] }}
-{% endif %}
 {% if 'phone' in config %}
 telephoneNumber: {{ config['phone'] }}
 {% endif %}
