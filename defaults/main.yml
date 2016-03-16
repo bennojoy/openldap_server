@@ -3,7 +3,7 @@
 #The domain prefix for ldap
 openldap_server_domain_name: example.com
 
-#This is the password for admin for openldap 
+#This is the password for admin for openldap
 openldap_server_rootpw: passme
 
 #The self signed ssl parameters
@@ -16,3 +16,22 @@ openldap_server_enable_plain: true
 openldap_server_enable_ssl: true
 openldap_server_enable_ipc: true
 
+# Create group and users
+openldap_enable_user_creation: false
+openldap_server_users:
+  staff:
+    william:
+      password: 26April1564
+      fullname: William Shakespeare
+      firstname: William
+      surname: Shakespeare
+      email: william@example.com
+      shell: /usr/bin/zsh
+      phone: "555-5555-555"
+    john:
+      password: 31Oct1795
+      fullname: John Keats
+      firstname: John
+      surname: Keats
+      email: john@example.com
+      shell: /usr/bin/bash

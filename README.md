@@ -24,6 +24,27 @@ them are as follows:
     openldap_serverlocation: Portland
     openldap_serverorganization: IT
 
+    # Create users
+    openldap_enable_user_creation: true
+    openldap_server_users:
+      staff:
+        william:
+          password: 26April1564
+          fullname: William Shakespeare
+          firstname: William
+          surname: Shakespeare
+          email: william@example.com
+          shell: /usr/bin/zsh
+          phone: "555-5555-555"
+        john:
+          password: 31Oct1795
+          fullname: John Keats
+          firstname: John
+          surname: Keats
+          email: john@example.com
+          shell: /usr/bin/bash
+
+
 
 Examples
 --------
@@ -37,7 +58,7 @@ Examples
         openldap_server_domain_name: example.com
         openldap_server_rootpw: passme
         openldap_server_enable_ssl: false
-       
+
 2) Configure an OpenLDAP server with SSL:
 
     - hosts: all
@@ -66,5 +87,3 @@ Author Information
 ------------------
 
 Benno Joy
-
-
