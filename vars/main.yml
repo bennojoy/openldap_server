@@ -1,4 +1,4 @@
 ---
-
+openldap_server_users: null
 env:
  RUNLEVEL: 1
