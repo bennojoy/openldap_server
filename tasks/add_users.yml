@@ -9,6 +9,5 @@
   when: users_copy.changed
   register: command_result
   failed_when: "command_result.rc not in [0,68]"
-  when: openldap_server_users is defined
   shell: ldapadd -c -x -D "cn=Manager,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}" -w {{ openldap_server_rootpw }} -f {{ openldap_server_app_path }}/users.ldif 
 
