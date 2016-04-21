@@ -1,0 +1,10 @@
+
+- name: Copy the example entries
+  copy: src=persons.ldif dest=/tmp
+
+- name: Add some example entries
+  shell: >
+    ldapadd -x -c -D "cn=Manager,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}" -w {{ openldap_server_rootpw }} -f '/tmp/persons.ldif' && touch /root/.entriesadded
+  args:
+    creates: /root/.entriesadded
+  no_log: true
