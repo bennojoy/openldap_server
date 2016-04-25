@@ -12,12 +12,19 @@ memberUid: {{ user }}
 
 {% for user, config in users.items() %}
 dn: uid={{ user }},ou=Users,{{ ldap_domain }}
-cn: {{ user }}
-sn: {{ user }}
+{% if 'fullname' in config %}
+cn: {{ config['fullname'] }}
+{% endif %}
+{% if 'givenname' in config %}
+givenName: {{ config['givenname'] }}
+{% endif %}
+{% if 'surname' in config %}
+sn: {{ config['surname'] }}
+{% endif %}
 userPassword: {{ config['password'] }}
 mail: {{ config['email'] }}
 loginShell: {{ config.get('shell', '/bin/bash') }}
-homeDirectory: {{ config.get('shell', '/home/{}'.format(user)) }}
+homeDirectory: {{ config.get('home', '/home/{}'.format(user)) }}
 {% if 'phone' in config %}
 telephoneNumber: {{ config['phone'] }}
 {% endif %}
