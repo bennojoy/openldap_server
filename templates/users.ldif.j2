@@ -1,4 +1,5 @@
 {% set ldap_domain = 'dc={},dc={}'.format(openldap_server_domain_name.split('.')[0],openldap_server_domain_name.split('.')[1]) %}
+{% if openldap_server_users %}
 {%- for group, users in openldap_server_users.items() -%}
 {% set guid_loop = loop %}
 dn: cn={{ group }},ou=Group,{{ ldap_domain }}
@@ -20,7 +21,7 @@ homeDirectory: {{ config.get('shell', '/home/{}'.format(user)) }}
 {% if 'phone' in config %}
 telephoneNumber: {{ config['phone'] }}
 {% endif %}
-uidNumber: {{ 10000 + loop.index }}
+uidNumber: {{ 10000 + loop.index + guid_loop.index * 100 }}
 gidNumber: {{ 10000 + guid_loop.index }}
 objectClass: inetOrgPerson
 objectClass: posixAccount
@@ -29,3 +30,4 @@ objectClass: shadowAccount
 {% endfor %}
 
 {% endfor %}
+{% endif %}
