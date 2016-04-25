@@ -23,7 +23,7 @@ openldap_server_users:
     william:
       password: 26April1564
       fullname: William Shakespeare
-      firstname: William
+      givenname: William
       surname: Shakespeare
       email: william@example.com
       shell: /usr/bin/zsh
@@ -31,7 +31,7 @@ openldap_server_users:
     john:
       password: 31Oct1795
       fullname: John Keats
-      firstname: John
+      givenname: John
       surname: Keats
       email: john@example.com
       shell: /usr/bin/bash

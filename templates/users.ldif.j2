@@ -14,8 +14,8 @@ dn: uid={{ user }},ou=Users,{{ ldap_domain }}
 {% if 'fullname' in config %}
 cn: {{ config['fullname'] }}
 {% endif %}
-{% if 'firstname' in config %}
-givenName: {{ config['firstname'] }}
+{% if 'givenname' in config %}
+givenName: {{ config['givenname'] }}
 {% endif %}
 {% if 'surname' in config %}
 sn: {{ config['surname'] }}
