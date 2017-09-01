@@ -1,0 +1,1 @@
+SLAPD_URLS="{% if openldap_server_enable_plain %}ldap:/// {% endif %}{% if openldap_server_enable_ssl %}ldaps:/// {% endif %}{% if openldap_server_enable_ipc %}ldapi:/// {% endif %}"

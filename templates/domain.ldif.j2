@@ -1,0 +1,14 @@
+{% set ldap_domain = 'dc={},dc={}'.format(openldap_server_domain_name.split('.')[0],openldap_server_domain_name.split('.')[1]) %}
+dn: {{ ldap_domain }}
+objectClass: domain
+dc: {{ openldap_server_domain_name.split('.')[0] }}
+
+dn: ou=Users,{{ ldap_domain }}
+ou: Users
+objectClass: top
+objectClass: organizationalUnit
+
+dn: ou=Group,{{ ldap_domain }}
+ou: Group
+objectClass: top
+objectClass: organizationalUnit

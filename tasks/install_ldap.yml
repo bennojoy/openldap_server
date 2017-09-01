@@ -5,13 +5,15 @@
 
 - name: Install the openldap and required Packages for RedHat
   yum: name={{ item }} state=installed
-  with_items: openldap_server_pkgs
+  with_items: 
+      - "{{ openldap_server_pkgs }}"
   when: ansible_os_family == 'RedHat'
 
 
 - name: Install the openldap and required Packages for Ubuntu
   apt: name={{ item }} state=installed update_cache=yes
-  with_items: openldap_server_pkgs
+  with_items: 
+      - "{{ openldap_server_pkgs }}"
   environment: env
   when: ansible_os_family == 'Debian'
 
@@ -19,11 +21,18 @@
   file: path={{ openldap_server_app_path }}/slapd.d state=absent
 
 - name: Generate the root password for ldap
-  shell: slappasswd -s {{ openldap_server_rootpw }} 
+  shell: slappasswd -h {SHA} -s {{ openldap_server_rootpw }}
+  changed_when: False
   register: root_password
 
 - name: Copy the slapd.conf configuration file for Redhat
   template: src=slapd.conf.j2 dest={{ openldap_server_app_path }}/slapd.conf
+  when: ansible_os_family == "RedHat"
+  notify: 
+   - restart slapd
+
+- name: Copy the /etc/sysconfig/slapd configuration file for Redhat
+  template: src=sysconfig.slapd.j2 dest=/etc/sysconfig/slapd
   when: ansible_os_family == "RedHat"
   notify: 
    - restart slapd
