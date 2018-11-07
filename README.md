@@ -38,6 +38,7 @@ Examples
         openldap_server_rootpw: passme
         openldap_server_enable_ssl: false
        
+
 2) Configure an OpenLDAP server with SSL:
 
     - hosts: all
@@ -66,5 +67,3 @@ Author Information
 ------------------
 
 Benno Joy
-
-
