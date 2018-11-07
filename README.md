@@ -28,7 +28,7 @@ them are as follows:
 Examples
 --------
 
-1) Configure an OpenLDAP server without SSL:
+Configure an OpenLDAP server without SSL:
 
     - hosts: all
       sudo: true
@@ -38,7 +38,8 @@ Examples
         openldap_server_rootpw: passme
         openldap_server_enable_ssl: false
        
-2) Configure an OpenLDAP server with SSL:
+
+Configure an OpenLDAP server with SSL:
 
     - hosts: all
       sudo: true
@@ -66,5 +67,3 @@ Author Information
 ------------------
 
 Benno Joy
-
-
