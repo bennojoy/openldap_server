@@ -30,6 +30,7 @@ Examples
 
 1) Configure an OpenLDAP server without SSL:
 
+```
     - hosts: all
       sudo: true
       roles:
@@ -37,10 +38,12 @@ Examples
         openldap_server_domain_name: example.com
         openldap_server_rootpw: passme
         openldap_server_enable_ssl: false
-       
+```
+
 2) Configure an OpenLDAP server with SSL:
 
-    - hosts: all
+```
+- hosts: all
       sudo: true
       roles:
       - role: bennojoy.openldap_server
@@ -51,6 +54,7 @@ Examples
         openldap_server_state: Oregon
         openldap_server_location: Portland
         openldap_server_organization: IT
+```
 
 Dependencies
 ------------
