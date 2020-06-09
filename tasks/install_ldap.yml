@@ -23,17 +23,17 @@
   register: root_password
 
 - name: Copy the slapd.conf configuration file for Redhat
-  template: src=slapd.conf.j2 dest="{{ openldap_server_app_path }}"/slapd.conf
+  template: src=slapd.conf.j2 dest={{ openldap_server_app_path }}/slapd.conf
   when: ansible_os_family == "RedHat"
   notify: 
    - restart slapd
 
 - name: Copy the slapd.conf configuration file
-  template: src=slapd.conf_ubuntu.j2 dest="{{ openldap_server_app_path }}"/slapd.conf
+  template: src=slapd.conf_ubuntu.j2 dest={{ openldap_server_app_path }}/slapd.conf
   when: ansible_os_family == "Debian"
   notify: 
    - restart slapd
 
 - name: Copy the ldap.conf configuration file
-  template: src=ldap.conf.j2 dest="{{ openldap_server_app_path }}"/ldap.conf
+  template: src=ldap.conf.j2 dest={{ openldap_server_app_path }}/ldap.conf
 

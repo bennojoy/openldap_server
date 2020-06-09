@@ -40,7 +40,7 @@
   service: name=slapd state=started enabled=yes 
   
 - name: Copy the template for creating base dn
-  template: src="{{ openldap_server_ldif }}" dest=/tmp/
+  template: src={{ openldap_server_ldif }} dest=/tmp/
   register: result
 
 - name: add the base domain
