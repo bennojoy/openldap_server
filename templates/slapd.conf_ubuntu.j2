@@ -28,9 +28,9 @@ access to attrs=shadowLastChange
 database        bdb
 suffix          "dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}"
 rootdn          "cn=Manager,dc={{ openldap_server_domain_name.split('.')[0] }},dc={{ openldap_server_domain_name.split('.')[1] }}"
-rootpw          {{ root_password.stdout }}
+rootpw          "{{ root_password.stdout }}"
 #This directory has to be created and would contain the ldap database.
-directory       /var/lib/ldap/{{ openldap_server_domain_name }}/
+directory       /var/lib/ldap/"{{ openldap_server_domain_name }}"/
 index objectClass                       eq,pres
 index ou,cn,mail,surname,givenname      eq,pres,sub
 index uidNumber,gidNumber,loginShell    eq,pres
